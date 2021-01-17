@@ -1,6 +1,6 @@
 from PIL import Image, ImageOps
 import os
-from combinations import *
+from .combinations import *
 
 def flip(seq):
     seq = seq.replace('l','x')
@@ -24,27 +24,19 @@ def solve(p,reverse=False):
     possible = set()
     for a, b, c in orders:
         possible.add(p[a]+p[b]+p[c])
-    
-    if reverse == False:
-        for seq in possible:
-            for c in combos:
-                if seq in c:
-                    flag = 1
-                    print(seq)
-                    image = Image.open(f'pictures/{c[-1]}')
-                    image = image.resize((394,214))
-                    display(image)
-    else:
-        for seq in possible:
-            for c in combos:
-                if flip(seq) in c:
-                    flag = 1
-                    print(seq)
-                    image = Image.open(f'pictures/{c[-1]}')
-                    image = image.resize((394,214))
+
+
+    for seq in possible:
+        for c in combos:
+            if ((flip(seq) in c) if reverse else (seq in c)):
+                flag = 1
+                print(seq)
+                image = Image.open(f'pictures/{c[-1]}')
+                image = image.resize((394,214))
+                if reverse:
                     image = ImageOps.mirror(image)
-                    display(image)
-        
+                image.show()
+                return
+
     if flag == 0:
         print('YOU ARE FUCKED')
-    

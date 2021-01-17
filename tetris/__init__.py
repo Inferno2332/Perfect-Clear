@@ -1,1 +1,1 @@
-from *pc import solve
+from .pc import solve
