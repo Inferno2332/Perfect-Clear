@@ -1,6 +1,6 @@
 from PIL import Image, ImageOps
 import os
-from .combinations import *
+from .combinations import * # noqa
 
 def flip(seq):
     seq = seq.replace('l','x')
