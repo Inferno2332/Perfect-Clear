@@ -1,6 +1,6 @@
 from PIL import Image, ImageOps
-import os
-from .combinations import * # noqa
+import sys
+from combinations import * # noqa
 
 def flip(seq):
     seq = seq.replace('l','x')
@@ -25,13 +25,12 @@ def solve(p,reverse=False):
     for a, b, c in orders:
         possible.add(p[a]+p[b]+p[c])
 
-
     for seq in possible:
         for c in combos:
             if ((flip(seq) in c) if reverse else (seq in c)):
                 flag = 1
                 print(seq)
-                image = Image.open(f'pictures/{c[-1]}')
+                image = Image.open(f'./pictures/{c[-1]}')
                 image = image.resize((394,214))
                 if reverse:
                     image = ImageOps.mirror(image)
@@ -40,3 +39,11 @@ def solve(p,reverse=False):
 
     if flag == 0:
         print('YOU ARE FUCKED')
+
+if __name__ == '__main__':
+     if len(sys.argv) == 3:
+          solve(sys.argv[1], sys.argv[2])
+     elif len(sys.argv) == 2:
+          solve(sys.argv[1])
+     else:
+          raise SystemExit("usage: py tetris/pc.py <pieces> <reverse>")
